@@ -23,8 +23,8 @@ class CreateUserService {
       email,
       password,
     });
-
     await usersRepository.save(user);
+
     return user;
   }
 }
