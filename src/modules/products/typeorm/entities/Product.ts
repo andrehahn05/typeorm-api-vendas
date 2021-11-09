@@ -5,11 +5,15 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import OrdesProducts from '@modules/orders/typeorm/entities/OrdersProducts';
 
 @Entity('products')
 class Product {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @OneToMany(() => OrdesProducts, order_products => order_products.product)
+  order_products: OrdesProducts[];
 
   @Column()
   name: string;
