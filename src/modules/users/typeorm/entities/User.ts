@@ -8,6 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import bcrypt from 'bcryptjs';
+import { Exclude } from 'class-transformer';
 
 @Entity('users')
 class User {
@@ -20,6 +21,7 @@ class User {
   @Column()
   email: string;
 
+  @Exclude()
   @Column()
   password: string;
 
