@@ -8,11 +8,11 @@ interface IRequest {
 }
 
 class ShowOrderService {
-  public async execute({ id }: IRequest): Promise<Order | undefined> {
+  public async execute({ id }: IRequest): Promise<Order> {
     const ordersRepository = getCustomRepository(OrdersRepository);
     const order = await ordersRepository.findById(id);
     if (!order) {
-      console.log(order);
+      // console.log(order);
       throw new AppError('Order not found.');
     }
 
