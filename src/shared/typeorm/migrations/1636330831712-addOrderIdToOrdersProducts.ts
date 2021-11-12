@@ -22,7 +22,7 @@ export class addOrderIdToOrdersProducts1636330831712
     await queryRunner.createForeignKey(
       'orders_products',
       new TableForeignKey({
-        name: 'OrdersProducts',
+        name: 'ordersProductsOrder',
         columnNames: ['order_id'],
         referencedTableName: 'orders',
         referencedColumnNames: ['id'],
@@ -32,7 +32,7 @@ export class addOrderIdToOrdersProducts1636330831712
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('orders_products', 'OrdersProducts');
+    await queryRunner.dropForeignKey('orders_products', 'ordersProductsOrder');
     await queryRunner.dropColumn('orders_products', 'order_id');
     await queryRunner.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
   }

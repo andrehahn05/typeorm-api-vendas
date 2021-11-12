@@ -1,5 +1,5 @@
 import Customer from '@modules/customers/typeorm/entities/Customer';
-import OrdesProducts from './OrdersProducts';
+import OrdersProducts from './OrdersProducts';
 import {
   CreateDateColumn,
   Entity,
@@ -19,10 +19,10 @@ class Order {
   @JoinColumn({ name: 'customer_id' })
   customer: Customer;
 
-  @OneToMany(() => OrdesProducts, order_products => order_products.order, {
+  @OneToMany(() => OrdersProducts, order_products => order_products.order, {
     cascade: true,
   })
-  order_products: OrdesProducts[];
+  order_products: OrdersProducts[];
 
   @CreateDateColumn()
   created_at: Date;
