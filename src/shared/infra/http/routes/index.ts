@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import productsRouter from '@modules/products/routes/products.routes';
-import usersRoutes from '@modules/users/routes/users.routes';
-import sessionsRoutes from '@modules/users/routes/sessions.routes ';
-import passowrdRouter from '@modules/users/routes/password.routes ';
-import profileRoutes from '@modules/users/routes/profile.routes';
+import usersRoutes from '@modules/users/infra/http/routes/users.routes';
+import sessionsRoutes from '@modules/users/infra/http/routes/sessions.routes ';
+import passowrdRouter from '@modules/users/infra/http/routes/password.routes ';
+import profileRoutes from '@modules/users/infra/http/routes/profile.routes';
 import customersRouter from '@modules/customers/infra/http/routes/customers.routes';
 import ordersRouter from '@modules/orders/routes/orders.routes';
 
