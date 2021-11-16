@@ -7,8 +7,8 @@ import { errors } from 'celebrate';
 import { pagination } from 'typeorm-pagination';
 import routes from './routes';
 import AppError from '@shared/errors/AppError';
-import '@shared/typeorm';
-import rateLimiter from '@shared/http/middlewares/rateLimiter';
+import '@shared/infra/typeorm';
+import rateLimiter from '@shared/infra/http/middlewares/rateLimiter';
 
 const app = express();
 app.use(express.json());
