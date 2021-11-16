@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { celebrate, Joi, Segments } from 'celebrate';
 import OrdersController from '../controllers/OrdersController';
-import authenticated from '../../../shared/infra/http/middlewares/authenticated';
+import authenticated from '../../../../../shared/infra/http/middlewares/authenticated';
 
 const ordersRouter = Router();
 const ordersController = new OrdersController();
