@@ -6,7 +6,7 @@ import { IProductsRepository } from '@modules/products/domain/repositories/IProd
 import { getRepository, In, Repository } from 'typeorm';
 import Product from '../entities/Product';
 
-class ProductRepository implements IProductsRepository {
+class ProductsRepository implements IProductsRepository {
   private repository: Repository<Product>;
 
   constructor() {
@@ -80,4 +80,4 @@ class ProductRepository implements IProductsRepository {
   }
 }
 
-export default ProductRepository;
+export default ProductsRepository;
