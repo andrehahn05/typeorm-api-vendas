@@ -26,10 +26,10 @@ container.registerSingleton<IOrdersRepository>(
   OrdersRepository,
 );
 
-container.registerSingleton<IUsersRepository>(
-  'UsersRepository',
-  UsersRepository,
-);
+// container.registerSingleton<IUsersRepository>(
+//   'UsersRepository',
+//   UsersRepository,
+// );
 
 container.registerSingleton<IUserTokensRepository>(
   'UserTokensRepository',
