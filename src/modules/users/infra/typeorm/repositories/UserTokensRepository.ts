@@ -17,6 +17,16 @@ class UserTokensRepository implements IUserTokensRepository {
     });
     return userToken;
   }
+
+  public async generate(user_id: string): Promise<UserToken> {
+    const userToken = this.repository.create({
+      user_id,
+    });
+
+    await this.repository.save(userToken);
+
+    return userToken;
+  }
 }
 
 export default UserTokensRepository;
