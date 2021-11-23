@@ -3,7 +3,7 @@ import { celebrate, Joi, Segments } from 'celebrate';
 import multer from 'multer';
 import uploadConfig from '@config/upload';
 import UserController from '../controllers/UserController';
-import authenticated from '../../../../../shared/infra/http/middlewares/authenticated';
+import authenticated from '@shared/infra/http/middlewares/authenticated';
 import UserAvatarController from '../controllers/UserAvatarController';
 
 const usersRoutes = Router();
@@ -13,6 +13,17 @@ const userAvatarController = new UserAvatarController();
 const upload = multer(uploadConfig);
 
 usersRoutes.get('/', authenticated, userController.index);
+
+usersRoutes.get(
+  '/:id',
+  authenticated,
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required(),
+    },
+  }),
+  userController.show,
+);
 
 usersRoutes.post(
   '/',
