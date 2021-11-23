@@ -1,17 +1,19 @@
 import { inject, injectable } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
-import { compare } from 'bcryptjs';
 import authConfig from '@config/auth';
 import { sign, Secret } from 'jsonwebtoken';
 import { IUsersRepository } from '../domain/repositories/IUsersRepository';
 import { IUserAuthenticated } from '../domain/models/IUserAuthenticated';
 import { ICreateSession } from '../domain/models/ICreateSession';
+import { IHashProvider } from '../providers/HashProvider/models/IHashPovider';
 
 @injectable()
 class CreateSessionService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
+    @inject('HashProvider')
+    private hashProvider: IHashProvider,
   ) {}
 
   public async execute({
@@ -24,7 +26,10 @@ class CreateSessionService {
       throw new AppError('Incorrect email/password !', 401);
     }
 
-    const checkPassword = await compare(password, user.password);
+    const checkPassword = await this.hashProvider.compareHash(
+      password,
+      user.password,
+    );
 
     if (!checkPassword) {
       throw new AppError('Incorrect email/password !', 401);

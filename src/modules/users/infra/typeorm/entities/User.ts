@@ -1,13 +1,10 @@
 import {
-  BeforeInsert,
-  BeforeUpdate,
   Column,
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import bcrypt from 'bcryptjs';
 import { Exclude } from 'class-transformer';
 import { IUser } from '@modules/users/domain/models/IUser';
 
@@ -22,18 +19,13 @@ class User implements IUser {
   @Column()
   email: string;
 
-  @Exclude()
   @Column()
+  @Exclude()
   password: string;
 
   @Column()
   avatar: string;
 
-  @BeforeInsert()
-  @BeforeUpdate()
-  hashPassword() {
-    this.password = bcrypt.hashSync(this.password, 8);
-  }
   @CreateDateColumn()
   created_at: Date;
 

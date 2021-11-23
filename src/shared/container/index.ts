@@ -1,5 +1,4 @@
 import { container } from 'tsyringe';
-
 import { ICustomersRepository } from '@modules/customers/domain/repositories/ICustomersRepository';
 import CustomersRepository from '@modules/customers/infra/typeorm/repositories/CustomersRepository';
 import { IProductsRepository } from '@modules/products/domain/repositories/IProductsRepository';
@@ -10,6 +9,7 @@ import { IUsersRepository } from '@modules/users/domain/repositories/IUsersRepos
 import UserTokensRepository from '@modules/users/infra/typeorm/repositories/UserTokensRepository';
 import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
 import { IUserTokensRepository } from '@modules/users/domain/repositories/IUserTokensRepository';
+import '@modules/users/providers';
 
 container.registerSingleton<ICustomersRepository>(
   'CustomersRepository',
