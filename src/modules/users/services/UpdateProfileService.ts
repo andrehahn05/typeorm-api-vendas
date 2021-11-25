@@ -1,4 +1,4 @@
-import { compare } from 'bcryptjs';
+import { compare, hash } from 'bcryptjs';
 import { inject, injectable } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 import { IUpdateProfile } from '../domain/models/IUpdateProfile';
@@ -42,7 +42,7 @@ class UpdateProfileService {
         throw new AppError('Old password does not match.');
       }
 
-      user.password = password;
+      user.password = await hash(password, 8);
     }
 
     user.name = name;

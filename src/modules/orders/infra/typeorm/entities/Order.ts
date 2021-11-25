@@ -1,7 +1,7 @@
 import Customer from '@modules/customers/infra/typeorm/entities/Customer';
 import OrdersProducts from './OrdersProducts';
+import { IOrder } from '@modules/orders/domain/models/IOrder';
 import {
-  Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
@@ -10,15 +10,12 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { IOrder } from '@modules/orders/domain/models/IOrder';
 
 @Entity('orders')
 class Order implements IOrder {
+  order: number;
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
-  @Column('int')
-  order: number;
 
   @ManyToOne(() => Customer)
   @JoinColumn({ name: 'customer_id' })
