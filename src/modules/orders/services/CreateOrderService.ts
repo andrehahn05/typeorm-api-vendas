@@ -26,16 +26,12 @@ class CreateOrderService {
     const customerExists = await this.customersRepository.findById(customer_id);
 
     if (!customerExists) {
-      throw new AppError(
-        `Could not find any customer with the given id.${customerExists}`,
-      );
+      throw new AppError(`Could not find any customer with the given id.`);
     }
 
     const existsProducts = await this.productsRepository.findAllByIds(products);
     if (existsProducts.length === 0) {
-      throw new AppError(
-        `Could not find any products with the given ids.${existsProducts.length}`,
-      );
+      throw new AppError(`Could not find any products with the given ids.`);
     }
 
     const existsProductsIds = existsProducts.map(product => product.id);
