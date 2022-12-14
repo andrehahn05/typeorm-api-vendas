@@ -1,14 +1,16 @@
 import { ICreateCustomer } from '@modules/customers/domain/models/ICreateCustomer';
 import { ICustomerPaginate } from '@modules/customers/domain/models/ICustomerPaginate';
 import { ICustomersRepository } from '@modules/customers/domain/repositories/ICustomersRepository';
-import { getRepository, Repository } from 'typeorm';
+import { SearchParams } from '@modules/customers/domain/repositories/ICustomersRepository';
+import { Repository } from 'typeorm';
 import Customer from '../entities/Customer';
+import { dataSource } from '@shared/infra/typeorm';
 
 class CustomersRepository implements ICustomersRepository {
   private repository: Repository<Customer>;
 
   constructor() {
-    this.repository = getRepository(Customer);
+    this.repository = dataSource.getRepository(Customer);
   }
 
   public async create({ name, email }: ICreateCustomer): Promise<Customer> {
@@ -35,10 +37,25 @@ class CustomersRepository implements ICustomersRepository {
     await this.repository.remove(customer);
   }
 
-  public async findAll(): Promise<Customer[] | undefined> {
-    const customers = await this.repository.find();
+  public async findAll({
+    page,
+    skip,
+    take,
+  }: SearchParams): Promise<ICustomerPaginate> {
+    const [customers, count] = await this.repository
+      .createQueryBuilder()
+      .skip(skip)
+      .take(take)
+      .getManyAndCount();
 
-    return customers;
+    const result = {
+      per_page: take,
+      total: count,
+      current_page: page,
+      data: customers,
+    };
+
+    return result;
   }
 
   public async findByName(name: string): Promise<Customer | undefined> {
