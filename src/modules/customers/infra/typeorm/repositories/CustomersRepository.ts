@@ -27,12 +27,6 @@ class CustomersRepository implements ICustomersRepository {
     return customer;
   }
 
-  public async findAllPaginate(): Promise<ICustomerPaginate> {
-    const customers = await this.repository.createQueryBuilder().paginate();
-
-    return customers as ICustomerPaginate;
-  }
-
   public async remove(customer: Customer): Promise<void> {
     await this.repository.remove(customer);
   }
@@ -58,32 +52,20 @@ class CustomersRepository implements ICustomersRepository {
     return result;
   }
 
-  public async findByName(name: string): Promise<Customer | undefined> {
-    const customer = await this.repository.findOne({
-      where: {
-        name,
-      },
-    });
+  public async findByName(name: string): Promise<Customer | null> {
+    const customer = await this.repository.findOneBy({ name });
 
     return customer;
   }
 
-  public async findById(id: string): Promise<Customer | undefined> {
-    const customer = await this.repository.findOne({
-      where: {
-        id,
-      },
-    });
+  public async findById(id: string): Promise<Customer | null> {
+    const customer = await this.repository.findOneBy({ id });
 
     return customer;
   }
 
-  public async findByEmail(email: string): Promise<Customer | undefined> {
-    const customer = await this.repository.findOne({
-      where: {
-        email,
-      },
-    });
+  public async findByEmail(email: string): Promise<Customer | null> {
+    const customer = await this.repository.findOneBy({ email });
 
     return customer;
   }
