@@ -18,7 +18,6 @@ class ListUserService {
       skip,
       take,
     });
-    // const users = await this.usersRepository.findAllPaginate(search, sortField);
 
     return users;
   }
