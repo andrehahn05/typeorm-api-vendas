@@ -1,34 +1,45 @@
+import { SearchParams } from '@config/model_paginate/SearchParams';
 import { ICreateProduct } from '@modules/products/domain/models/ICreateProduct';
 import { IFindProducts } from '@modules/products/domain/models/IFindProducts';
 import { IProductPaginate } from '@modules/products/domain/models/IProductPaginate';
 import { IUpdateStockProduct } from '@modules/products/domain/models/IUpdateStockProduct';
 import { IProductsRepository } from '@modules/products/domain/repositories/IProductsRepository';
-import { getRepository, In, Repository } from 'typeorm';
+import { dataSource } from '@shared/infra/typeorm';
+import { In, Repository } from 'typeorm';
 import Product from '../entities/Product';
 
 class ProductsRepository implements IProductsRepository {
   private repository: Repository<Product>;
 
   constructor() {
-    this.repository = getRepository(Product);
+    this.repository = dataSource.getRepository(Product);
   }
 
-  public async findById(id: string): Promise<Product | undefined> {
-    const product = this.repository.findOne(id);
+  public async findById(id: string): Promise<Product | null> {
+    const product = this.repository.findOneBy({ id });
 
     return product;
   }
 
-  public async findAll(): Promise<Product[]> {
-    const products = this.repository.find();
+  public async findAll({
+    page,
+    skip,
+    take,
+  }: SearchParams): Promise<IProductPaginate> {
+    const [products, count] = await this.repository
+      .createQueryBuilder()
+      .skip(skip)
+      .take(take)
+      .getManyAndCount();
 
-    return products;
-  }
+    const result = {
+      per_page: take,
+      total: count,
+      current_page: page,
+      data: products,
+    };
 
-  public async findAllPaginate(): Promise<IProductPaginate> {
-    const products = await this.repository.createQueryBuilder().paginate();
-
-    return products as IProductPaginate;
+    return result;
   }
 
   public async create({
@@ -57,12 +68,8 @@ class ProductsRepository implements IProductsRepository {
     await this.repository.remove(product);
   }
 
-  public async findByName(name: string): Promise<Product | undefined> {
-    const product = this.repository.findOne({
-      where: {
-        name,
-      },
-    });
+  public async findByName(name: string): Promise<Product | null> {
+    const product = this.repository.findOneBy({ name });
 
     return product;
   }

@@ -1,6 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 import { IProductsRepository } from '../domain/repositories/IProductsRepository';
 import { IProductPaginate } from '../domain/models/IProductPaginate';
+import { IParams } from '@config/model_paginate/IParams';
 
 @injectable()
 class ListProductService {
@@ -9,8 +10,14 @@ class ListProductService {
     private productsRepository: IProductsRepository,
   ) {}
 
-  public async execute(): Promise<IProductPaginate> {
-    const products = await this.productsRepository.findAllPaginate();
+  public async execute({ page, limit }: IParams): Promise<IProductPaginate> {
+    const take = limit;
+    const skip = (Number(page) - 1) * take;
+    const products = await this.productsRepository.findAll({
+      page,
+      skip,
+      take,
+    });
 
     return products;
   }
