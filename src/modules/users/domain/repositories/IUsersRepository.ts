@@ -1,13 +1,13 @@
 import { ICreateUser } from '../models/ICreateUser';
 import { IPaginateUser } from '../models/IPaginateUser';
 import { IUser } from '../models/IUser';
+import { SearchParams } from '@config/model_paginate/SearchParams';
 
 export interface IUsersRepository {
-  findAll(): Promise<IUser[]>;
-  findAllPaginate(search: string, sortField: string): Promise<IPaginateUser>;
-  findByName(name: string): Promise<IUser | undefined>;
-  findById(id: string): Promise<IUser | undefined>;
-  findByEmail(email: string): Promise<IUser | undefined>;
+  findAll({ page, skip, take }: SearchParams): Promise<IPaginateUser>;
+  findByName(name: string): Promise<IUser | null>;
+  findById(id: string): Promise<IUser | null>;
+  findByEmail(email: string): Promise<IUser | null>;
   create(data: ICreateUser): Promise<IUser>;
   save(user: IUser): Promise<IUser>;
 }

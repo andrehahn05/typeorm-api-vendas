@@ -1,12 +1,8 @@
 import { ICustomerPaginate } from '@modules/customers/domain/models/ICustomerPaginate';
 import { ICreateCustomer } from '../models/ICreateCustomer';
 import { ICustomer } from '../models/ICustomer';
+import { SearchParams } from '@config/model_paginate/SearchParams';
 
-export type SearchParams = {
-  page: number;
-  skip: number;
-  take: number;
-};
 export interface ICustomersRepository {
   findAll({ page, skip, take }: SearchParams): Promise<ICustomerPaginate>;
   findByName(name: string): Promise<ICustomer | null>;
@@ -16,3 +12,4 @@ export interface ICustomersRepository {
   save(customer: ICustomer): Promise<ICustomer>;
   remove(customer: ICustomer): Promise<void>;
 }
+export { SearchParams };

@@ -1,3 +1,4 @@
+import { IParams } from '@config/model_paginate/IParams';
 import { inject, injectable } from 'tsyringe';
 import { IPaginateUser } from '../domain/models/IPaginateUser';
 import { IUsersRepository } from '../domain/repositories/IUsersRepository';
@@ -9,11 +10,15 @@ class ListUserService {
     private usersRepository: IUsersRepository,
   ) {}
 
-  public async execute(
-    search = '',
-    sortField = 'name',
-  ): Promise<IPaginateUser> {
-    const users = await this.usersRepository.findAllPaginate(search, sortField);
+  public async execute({ page, limit }: IParams): Promise<IPaginateUser> {
+    const take = limit;
+    const skip = (Number(page) - 1) * take;
+    const users = await this.usersRepository.findAll({
+      page,
+      skip,
+      take,
+    });
+    // const users = await this.usersRepository.findAllPaginate(search, sortField);
 
     return users;
   }

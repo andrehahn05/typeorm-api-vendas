@@ -7,16 +7,12 @@ import ShowUserService from '@modules/users/services/ShowUserService';
 
 class UserController {
   public async index(request: Request, response: Response): Promise<Response> {
-    let search = '';
-    const sortField = String(request.query.sortField);
-
-    if (request.query.search) {
-      search = String(request.query.search);
-    }
+    const page = request.query.page ? Number(request.query.page) : 1;
+    const limit = request.query.limit ? Number(request.query.limit) : 1;
 
     const listUsers = container.resolve(ListUserService);
 
-    const users = await listUsers.execute(search, sortField);
+    const users = await listUsers.execute({ page, limit });
 
     return response.json(classToClass(users));
   }
