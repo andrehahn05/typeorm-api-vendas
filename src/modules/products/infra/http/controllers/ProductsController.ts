@@ -9,7 +9,7 @@ import UpdateProductService from '@modules/products/services/UpdateProductServic
 class ProductsController {
   public async index(request: Request, response: Response): Promise<Response> {
     const page = request.query.page ? Number(request.query.page) : 1;
-    const limit = request.query.page ? Number(request.query.page) : 5;
+    const limit = request.query.limit ? Number(request.query.limit) : 1;
 
     const listProducts = container.resolve(ListProductService);
 

@@ -30,7 +30,7 @@ class OrdersController {
 
   public async index(request: Request, response: Response): Promise<Response> {
     const page = request.query.page ? Number(request.query.page) : 1;
-    const limit = request.query.limit ? Number(request.query.limit) : 5;
+    const limit = request.query.limit ? Number(request.query.limit) : 1;
 
     const listOrders = container.resolve(ListOrderService);
 
