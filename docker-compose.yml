@@ -21,7 +21,7 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - .docker/dbdata:/var/lib/postgressql/data
+      - .docker/dbdata:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=docker
       - POSTGRES_DB=apivendas
@@ -29,10 +29,10 @@ services:
   redis:
     image: 'bitnami/redis:latest'
     container_name: apivendas-redis
-    environment: 
+    environment:
       - ALLOW_EMPTY_PASSWORD=yes
 
-  pgadimin:
+  pgadmin:
     image: dpage/pgadmin4
     container_name: apivendas-pgadmin
     tty: true
@@ -42,7 +42,7 @@ services:
     ports:
       - '8000:80'
     depends_on:
-      - db 
+      - db
 
 
      
