@@ -37,7 +37,7 @@ Faça um clone deste repositório e instale no seu ambiente de desenvolvimento u
 ```
 git clone git@github.com:andrehahn05/typeorm-api-vendas.git
 ```
-#### Crie arquivo .env baseado no .env.example
+### Crie arquivo .env baseado no .env.example
 ```
 APP_SECRET=secret
 APP_API_URL=http://localhost:3001
@@ -57,10 +57,9 @@ docker-compose up
 ```
 docker-compose down
 ```
-#### Se houver erro de permissão 
+### Se houver erro de permissão 
 ```
 cd typeorm-api-vendas
 
 chmod +x .docker/entrypoint.sh
 ```
-
