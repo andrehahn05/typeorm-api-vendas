@@ -50,9 +50,11 @@ MAIL_DRIVER=ethereal
 ### Docker compose:
 ```
 cd typeorm-api-vendas
-
+```
+```
 docker-compose up
-
+```
+```
 docker-compose down
 ```
 #### Se houver erro de permissão 
